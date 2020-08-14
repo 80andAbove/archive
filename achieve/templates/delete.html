@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achieve: A To Do App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+</head>
+<body>
+
+	{% include 'navbar.html' %}
+	
+	<style>
+        h1, h3{
+            color: rgb(0, 0, 0);
+        }
+
+        body{
+           background-color: rgb(247, 247, 247);
+        }
+		p{
+			font-size: 20px;
+			color: rgb(0, 0, 0);
+		}
+	</style>
+
+	<div class="container">
+		<p class="d-flex justify-content-center align-items-center">Are you sure you want to delete "{{item}}"?</p>
+
+		<a class="d-flex justify-content-center btn btn-danger" href="{% url 'list' %}" >Cancel</a>
+	
+		<form method="POST" action="">
+			{% csrf_token %}
+			<input class="btn btn-info" type="submit" name="Confirm">
+		</form>
+	</div>
+	
+
+</body>
+</html>
+

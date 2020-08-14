@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achieve: A To Do App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <style>
+
+        h1, h3{
+            color: rgb(0, 0, 0);
+        }
+
+        body{
+           background-color: rgb(255, 251, 251);
+        }
+
+        .center-column{
+        	width:600px;
+        	margin: 20px auto;
+        	padding:20px;
+        	background-color: #fff;
+        	border-radius: 3px;
+        	box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
+        }
+
+        .item-row{
+        	background-color: #D9DADC;
+        	margin: 10px;
+        	padding: 20px;
+        	border-radius: 3px;
+        	color: rgb(0, 0, 0);
+        	font-size: 16px;
+        	box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
+        }
+
+        
+        
+    </style>
+
+    <div class="center-column">
+
+        <form method="POST" action="/">
+            {% csrf_token %}
+            {{form.title}}
+            <input class="btn btn-success" type="submit" name="Create Task">
+        </form>
+    
+        <div class="todo-list">
+    
+        {% for task in tasks %}
+            <div class="item-row">
+                <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+    
+                {% if task.complete == True %}
+                <strike>{{task}}</strike>
+                {% else %}
+                <span>{{task}}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

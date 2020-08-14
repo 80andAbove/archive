@@ -1,0 +1,18 @@
+from django.shortcuts import render, redirect
+from .models import *
+# Create your views here.
+def home(request):
+    all_todo_items = TodoListItem.objects.all()
+    return render(request, 'todolist.html',
+    {'all_items':all_todo_items}) 
+
+def addToDo(request):
+    x = request.POST['content']
+    new_item = TodoListItem(content = x)
+    new_item.save()
+    return redirect('home')
+
+def deleteToDo(request):
+    y = TodoListItem.objects.get(id=1)
+    y.delete()
+    return redirect('home')
