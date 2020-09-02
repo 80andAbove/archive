@@ -9,9 +9,9 @@ from .forms import TaskForm
 
 def index(request):
 	tasks = Task.objects.all()
-
+	
 	form = TaskForm()
-
+	
 	if request.method =='POST':
 		form = TaskForm(request.POST)
 		if form.is_valid():
@@ -27,9 +27,9 @@ def index(request):
 
 def updateTask(request, pk):
 	task = Task.objects.get(id=pk)
-
+	
 	form = TaskForm(instance=task)
-
+	
 	if request.method == 'POST':
 		form = TaskForm(request.POST, instance=task)
 		if form.is_valid():
@@ -52,3 +52,16 @@ def deleteTask(request, pk):
 		}
 	return render(request, 'delete.html', context)
 
+"""
+
+def categories(request):
+	category = Category.objects.all()
+
+	categoryForm = CategoryForm(instance=task)
+
+	if request.method == 'POST':
+		categoryForm = CategoryForm(request.POST)
+		if categoryForm.is_valid():
+			categoryForm.save()
+		return redirect('/')
+"""
