@@ -47,11 +47,14 @@ def deleteTask(request, pk):
 	context = {'item':item}
 	return render(request, 'delete.html', context)
 
-"""
-
 def categories(request):
 	category = Category.objects.all()
 
+	context = {'category': category}
+	return render(request, 'categories.html', context)
+
+
+"""
 	categoryForm = CategoryForm(instance=task)
 
 	if request.method == 'POST':
