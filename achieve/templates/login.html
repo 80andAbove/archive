@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achieve: A To Do App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <form method="POST" action"">
+        {% csrf_token %}
+        <span class="input-group-text"><i class="fas fa-user"></i></span>
+        <input type="text" name="username" placeholder="Username..." class="form-control">
+        <input type="password" name="password" placeholder="Password..." class="form-control" >
+        <input class="btn login_btn btn-info" type="submit" value="Login">
+    </form>
+
+    {% for messsage in messages %}
+        <p>{{message}}</p>
+    {% endfor %}
+
+    <div class="mt-4">
+        <div class="d-flex justify-content-center links">
+            Don't have an account? <a href="{% url 'register' %}" class="ml-2"> Sign Up</a>
+        </div>
+    </div>
+
+</body>
