@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 
+def welcome(request):
+	return render(request, 'welcome.html')
 
 def registerPage(request):
 	form = CreateUserForm()
