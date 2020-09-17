@@ -12,28 +12,8 @@
 </head>
 <body>
 
-	<style>
-        h1, h3{
-            color: rgb(0, 0, 0);
-        }
+    {% include 'navbar_guest.html' %}
 
-        body{
-           background-color: rgb(247, 247, 247);
-		}
-
-	</style>
-
-	{% include 'navbar_user.html' %}	
-
-	<div class="container">
-		<h3>Update Task</h3>
-
-		<form method="POST" action="">
-			{% csrf_token %}
-	
-			{{form}}
-			<input class="btn btn-info" type="submit" value="Update" name="Update Task">
-		</form>
-	</div>
+    <h1>Welcome</h1>
+    <p>Achieve Your Goals Todays</p>
 </body>
-</html>
