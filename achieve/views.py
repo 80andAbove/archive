@@ -51,16 +51,24 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def index(request):
-	tasks = Task.objects.all()
 	
-	form = TaskForm()
 	
 	if request.method =='POST':
 		form = TaskForm(request.POST)
+		print('Processing Form')
 		if form.is_valid():
-			form.save()
-		return redirect('/')
+			print('Form Valid')
+			task_obj = form.save(commit=False)
+			task_obj.user = request.user
+			task_obj.complete = False
+			task_obj.save()
+		else:
+			print('Form Invalid')
+			print(form.errors)
+		return redirect('/index')
 
+	tasks = Task.objects.all()
+	form = TaskForm()
 
 	context = {
 		'tasks':tasks, 
@@ -70,16 +78,16 @@ def index(request):
 
 @login_required(login_url='login')
 def updateTask(request, pk):
-	task = Task.objects.get(id=pk)
 	
-	form = TaskForm(instance=task)
-	
+	task = Task.objects.get(id=pk)	
+
 	if request.method == 'POST':
 		form = TaskForm(request.POST, instance=task)
 		if form.is_valid():
 			form.save()
-			return redirect('/')
+			return redirect('/index')
 
+	form = TaskForm(instance=task)
 	context = {'form':form}
 
 	return render(request, 'update.html', context)
@@ -90,7 +98,7 @@ def deleteTask(request, pk):
 
 	if request.method == 'POST':
 		item.delete()
-		return redirect('/')
+		return redirect('/index')
 
 	context = {
 		'item':item,
