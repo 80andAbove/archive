@@ -31,9 +31,9 @@
 	<div class="container">
 		<p class="d-flex justify-content-center align-items-center">Are you sure you want to delete "{{item}}"?</p>
 
-		<a class="d-flex justify-content-center btn btn-secondary" href="{% url 'list' %}" >Cancel</a>
+		<a class="d-flex justify-content-center btn btn-secondary" href="{% url 'index' %}" >Cancel</a>
 	
-		<form method="POST" action="">
+		<form method="POST">
 			{% csrf_token %}
 			<input class="btn btn-danger" type="submit" value="Delete" name="Confirm">
 		</form>

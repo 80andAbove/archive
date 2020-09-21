@@ -1,5 +1,6 @@
 from django import forms
-from .models import *
+# COMMENT: BAD PRACTICE TO IMPORT *
+from .models import Task, Category
 from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth.models import User
 
@@ -8,7 +9,7 @@ class TaskForm(forms.ModelForm):
 
 	class Meta:
 		model = Task
-		fields = '__all__'
+		fields = ['title']
 
 class CreateUserForm(UserCreationForm):
 	class Meta:
