@@ -49,7 +49,7 @@ def logoutUser(request):
 	logout(request)
 	return redirect('login')
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def index(request):
 	
 	
@@ -74,7 +74,7 @@ def index(request):
 		'tasks':tasks, 
 		'form':form,
 		}
-	return render(request, 'todolist.html', context)
+	return render(request, 'index.html', context)
 
 @login_required(login_url='login')
 def updateTask(request, pk):
