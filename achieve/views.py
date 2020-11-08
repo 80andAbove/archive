@@ -5,42 +5,58 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from .decorators import unauthenticated_user, allowed_users, admin_only
+
 # Create your views here.
 from .models import Task, Category
 from .forms import TaskForm, CreateUserForm
 
+@unauthenticated_user
 def welcome(request):
 	return render(request, 'welcome.html')
 
 def registerPage(request):
 	form = CreateUserForm()
-
+	print("asdf")
 	if request.method == 'POST':
 		form = CreateUserForm(request.POST)
 		if form.is_valid():
+			print("zxcv")
+			print("Register success")
 			form.save()
 			user = form.cleaned_data.get('username')
 			messages.success(request, 'Account was created for ' + user)
+		else:
+			print("qwerty")
+			print("Register failed")
+			print(form.errors)
+			
 		return redirect('login')
 
 	context = {'form':form}
 	return render(request, 'register.html', context)
 
+@unauthenticated_user
 def loginPage(request):
 	if request.user.is_authenticated:
 		return redirect('index')
+		print("success")
 	else:
+		print("failed")
 		if request.method == 'POST':
 			username = request.POST.get('username')
-			password = request.POST.get('password')
+			password = request.POST.get('password1')
 
 			user = authenticate(request, username=username, password=password)
-
+			print("woah")
+			
 			if user is not None:
 				login(request, user)
 				return redirect('index')
+				print("yup")
 			else:
 				messages.info(request, 'Username OR password is incorrect')
+				print("nope")
 
 	context = {}
 	return render(request, 'login.html', context)
@@ -52,8 +68,18 @@ def logoutUser(request):
 @login_required(login_url='login')
 def index(request):
 	
+	tasks = Task.objects.all()
+	form = TaskForm()
+
 	
-	if request.method =='POST':
+	# if group == "admin":
+    # 	#print('User is Admin')
+	# 	#admin_user = True
+	# else:
+	# 	print('User is not Admin')
+
+
+	if request.method == 'POST':
 		form = TaskForm(request.POST)
 		print('Processing Form')
 		if form.is_valid():
@@ -62,17 +88,16 @@ def index(request):
 			task_obj.user = request.user
 			task_obj.complete = False
 			task_obj.save()
+		
 		else:
 			print('Form Invalid')
 			print(form.errors)
 		return redirect('/index')
 
-	tasks = Task.objects.all()
-	form = TaskForm()
-
 	context = {
 		'tasks':tasks, 
 		'form':form,
+		#'admin_user':admin_user
 		}
 	return render(request, 'todolist.html', context)
 
