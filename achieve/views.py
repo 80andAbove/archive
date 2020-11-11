@@ -17,7 +17,6 @@ def welcome(request):
 
 def registerPage(request):
 	form = CreateUserForm()
-	print("asdf")
 	if request.method == 'POST':
 		form = CreateUserForm(request.POST)
 		if form.is_valid():
@@ -25,11 +24,15 @@ def registerPage(request):
 			print("Register success")
 			form.save()
 			user = form.cleaned_data.get('username')
-			messages.success(request, 'Account was created for ' + user)
+			messages.success(request, "Account was created for " + user)
+		if password1 != password2:
+				print("ariana grande")
 		else:
 			print("qwerty")
 			print("Register failed")
 			print(form.errors)
+			messages.info(request, "Could not register")
+			return redirect('register')
 			
 		return redirect('login')
 
@@ -55,7 +58,7 @@ def loginPage(request):
 				return redirect('index')
 				print("yup")
 			else:
-				messages.info(request, 'Username OR password is incorrect')
+				messages.info(request, 'Username OR Password is incorrect')
 				print("nope")
 
 	context = {}

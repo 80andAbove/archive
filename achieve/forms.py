@@ -12,6 +12,11 @@ class TaskForm(forms.ModelForm):
 		fields = ['title']
 
 class CreateUserForm(UserCreationForm):
+	email = forms.EmailField(widget=forms.TextInput, label="Email")
+	password1 = forms.CharField(widget=forms.PasswordInput, label="Password")
+	password2 = forms.CharField(widget=forms.PasswordInput, label="Password (again)")
+	
 	class Meta:
 		model = User
 		fields = ['username', 'email', 'password1', 'password2']
+
