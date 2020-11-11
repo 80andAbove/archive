@@ -105,15 +105,19 @@
             <div class="col-xl-12 col-lg-12">
               <div class="card shadow mb-4">
                 <!-- Card Header - Accordion -->
-                <a href="#collapseCardExample-{{ task.pk }}" class="card-header" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample-{{ task.pk }}">
+                <div class="card-header">
                   <h6 class="m-0 font-weight-bold text-primary">
                     {{task}}                  
                   </h6>
-                  <a href="#" class="btn">
-                    <i class="far fa-square"></i>
-                  </a>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink-{{ task.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="icon-bar">
+                    <a href="#" class="btn complete-checkbox" data-id="{{ task.id }}">
+                      {% if task.complete %}
+                      <i class="far fa-check-square" id="toggleCheckbox-{{ task.id }}"></i>
+                      {% else %}
+                      <i class="far fa-square" id="toggleCheckbox-{{ task.id }}"></i>
+                      {% endif %}
+                    </a>
+                    <a class="dropdown no-arrow" href="#" role="button" id="dropdownMenuLink-{{ task.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink-{{ task.pk }}">
@@ -123,10 +127,11 @@
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">Something else here</a>
                     </div>
-                  </a>
-                  </div>
+                    <a href="#collapseCardExample-{{ task.pk }}" class="card-header" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample-{{ task.pk }}"></a>
+                </div>
+                </div>
                 <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCardExample-{{ task.pk }}">
+                <div class="collapse" id="collapseCardExample-{{ task.pk }}">
                   <div class="card-body">
                     {{ task.description }}
 
@@ -213,6 +218,47 @@
   <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
   <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
   <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+
+  <script type="text/javascript">
+    // send request to change the is_private state on customSwitches toggle
+    function toggleComplete(pk) {
+      let base_url = window.location.origin;
+      let full_url = `${base_url}/complete-toggle/${pk}/`;
+      let toggleCheckbox = $(this);
+      var toggleCheckboxId = toggleCheckbox.attr('data-id');
+        $.ajax({
+            url: full_url,
+            data: {
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                task_id: toggleCheckboxId // true if checked else false
+
+            },
+            type: "POST",
+            dataType : "json",
+            success: function(data) {
+              let innerCheckbox = $("#toggleCheckbox-"+toggleCheckboxId)
+              innerCheckbox.toggleClass("fa-check-square").toggleClass("fa-square")
+            }
+        })
+        // $.ajax().done(), $.ajax().fail(), $ajax().always() are upto you. Add/change accordingly
+        .done(function(data) {
+            console.log(data);
+            // show some message according to the response. 
+            // For eg. A message box showing that the status has been changed
+        })
+        .always(function() {
+            console.log('[Done]');
+        })
+    }
+
+    /////////////
+    /* BINDING */
+    /////////////
+
+      // Complete task toggle
+    $(".icon-bar").on("click", ".complete-checkbox", toggleComplete);
+
+</script>
 
 </body>
 

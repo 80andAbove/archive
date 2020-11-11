@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -75,6 +75,22 @@ def index(request):
 		'form':form,
 		}
 	return render(request, 'index.html', context)
+
+def complete_toggle(request, todo_id):
+	print('in complete toggle')
+	# if request.is_ajax() and request.method=='POST':
+	if request.is_ajax() and request.method=='POST':
+		task_id = request.POST.get('task_id')
+		task = Task.objects.get(pk=task_id)
+		print('task')
+		print(task)
+		task.complete = True if task.complete == False else False
+		task.save()
+		data = {'status':'success', 'is_complete': task.complete}
+		return JsonResponse(data, status=200)
+	else:
+		data = {'status':'error'}
+		return JsonResponse(data, status=400)
 
 @login_required(login_url='login')
 def updateTask(request, pk):
