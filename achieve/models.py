@@ -26,6 +26,8 @@ class Task(models.Model):
 	complete = models.BooleanField(default=False)
 	created = models.DateTimeField(auto_now_add=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, blank=True, null=True)
+	description = models.TextField(blank=True, null=True)
 
 	def __str__(self):
 		return self.title
