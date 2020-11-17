@@ -99,7 +99,7 @@
 
           <!-- Content Row -->
 
-          {% for task in tasks%}
+          {% for task in tasks %}
           <div class="row">
             <!-- Area Chart -->
             <div class="col-xl-12 col-lg-12">
@@ -189,7 +189,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="{% url 'login' %}">Logout</a>
         </div>
       </div>
     </div>

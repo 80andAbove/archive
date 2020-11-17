@@ -25,8 +25,8 @@ def registerPage(request):
 			form.save()
 			user = form.cleaned_data.get('username')
 			messages.success(request, "Account was created for " + user)
-		if password1 != password2:
-				print("ariana grande")
+		# if password1 != password2:
+		# 		print("ariana grande")
 		else:
 			print("qwerty")
 			print("Register failed")
