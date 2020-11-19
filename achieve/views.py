@@ -13,6 +13,7 @@ from .forms import TaskForm, CreateUserForm
 
 @unauthenticated_user
 def welcome(request):
+	print("Welcome")
 	return render(request, 'welcome.html')
 
 def registerPage(request):
@@ -25,8 +26,7 @@ def registerPage(request):
 			form.save()
 			user = form.cleaned_data.get('username')
 			messages.success(request, "Account was created for " + user)
-		# if password1 != password2:
-		# 		print("ariana grande")
+
 		else:
 			print("qwerty")
 			print("Register failed")
@@ -65,8 +65,10 @@ def loginPage(request):
 	return render(request, 'login.html', context)
 
 def logoutUser(request):
+	print("logging out")
 	logout(request)
-	return redirect('login')
+	# Redirect to the login page
+	return redirect('welcome')
 
 # @login_required(login_url='login')
 def index(request):
