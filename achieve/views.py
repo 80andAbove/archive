@@ -64,6 +64,13 @@ def loginPage(request):
 	context = {}
 	return render(request, 'login.html', context)
 
+def forgotPassword(request):
+	print("Forgot")
+
+	context = {}
+	return render(request, 'forgot-password.html')
+
+
 def logoutUser(request):
 	print("logging out")
 	logout(request)
