@@ -1,4 +1,4 @@
-{% load static %}
+ {% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,242 +24,220 @@
 
 </head>
 
+{% include 'topbar.html' %}
+
 <body id="page-top">
 
-  
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-    
-    {% include 'sidebar.html' %}
-    
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-      <!-- Main Content -->
-      <div id="content">
-
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
-          {% include 'topbar.html' %}
-
+  <!-- Main Content -->
+  <div id="content">
         <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Your Tasks</h1>
-            <a  href="#" data-toggle="modal" data-target="#addTaskModal" class="btn btn-success btn-circle">
-              <i class="fas fa-plus"></i>
-            </a>
+    <div class="container-fluid">
+    
+      <!-- Page Heading -->
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Your Tasks</h1>
+        <a  href="#" data-toggle="modal" data-target="#addTaskModal" class="btn btn-success btn-circle">
+          <i class="fas fa-plus"></i>
+        </a>
+      </div>
+      <!-- Add Task Modal-->
+      <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <form method="POST">
+              <div class="modal-body">
+                {% csrf_token %}
+                {{form.category}}
+                {{form.title}}
+                {{form.description}}
+              </div>
+              <div class="modal-footer">
+                <!-- <input class="btn btn-success" type="submit" value="Add Task" name="Create Task"> -->
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" type="submit" value="Add Task" name="Create Task">
+              </div>
+            </form>
           </div>
-          <!-- Add Task Modal-->
-          <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
-                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                  </button>
+        </div>
+      </div>
+      <!-- Content Row -->
+      {% for task in tasks %}
+      <div class="row">
+        <!-- Area Chart -->
+        <div class="col-xl-12 col-lg-12">
+          <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <div class="card-header">
+              <h6 class="m-0 font-weight-bold text-primary">
+                {{task}}                  
+              </h6>
+              <div class="icon-bar">
+                <a href="#" class="btn complete-checkbox" data-id="{{ task.id }}">
+                  {% if task.complete %}
+                  <i class="far fa-check-square" id="toggleCheckbox-{{ task.id }}"></i>
+                  {% else %}
+                  <i class="far fa-square" id="toggleCheckbox-{{ task.id }}"></i>
+                  {% endif %}
+                </a>
+                <a class="dropdown no-arrow" href="#" role="button" id="dropdownMenuLink-{{ task.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink-{{ task.pk }}">
+                  <div class="dropdown-header">Dropdown Header:</div>
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
                 </div>
-                <form method="POST">
-                  <div class="modal-body">
-                    {% csrf_token %}
-                    {{form.category}}
-                    {{form.title}}
-                    {{form.description}}
-                  </div>
-                  <div class="modal-footer">
-                    <!-- <input class="btn btn-success" type="submit" value="Add Task" name="Create Task"> -->
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <input class="btn btn-primary" type="submit" value="Add Task" name="Create Task">
-                  </div>
-                </form>
+                <a href="#collapseCardExample-{{ task.pk }}" class="card-header" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample-{{ task.pk }}"></a>
+            </div>
+            </div>
+            <!-- Card Content - Collapse -->
+            <div class="collapse" id="collapseCardExample-{{ task.pk }}">
+              <div class="card-body">
+                {{ task.description }}
+                <br>
+                
+                Category: <strong>{{ task.category }}</strong> 
+                
+                <br>
+                Due by: 23 June 2020 8am
               </div>
             </div>
           </div>
-
-          <!-- Content Row -->
-
-          {% for task in tasks %}
-          <div class="row">
-            <!-- Area Chart -->
-            <div class="col-xl-12 col-lg-12">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Accordion -->
-                <div class="card-header">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                    {{task}}                  
-                  </h6>
-                  <div class="icon-bar">
-                    <a href="#" class="btn complete-checkbox" data-id="{{ task.id }}">
-                      {% if task.complete %}
-                      <i class="far fa-check-square" id="toggleCheckbox-{{ task.id }}"></i>
-                      {% else %}
-                      <i class="far fa-square" id="toggleCheckbox-{{ task.id }}"></i>
-                      {% endif %}
-                    </a>
-                    <a class="dropdown no-arrow" href="#" role="button" id="dropdownMenuLink-{{ task.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink-{{ task.pk }}">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                    <a href="#collapseCardExample-{{ task.pk }}" class="card-header" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardExample-{{ task.pk }}"></a>
-                </div>
-                </div>
-                <!-- Card Content - Collapse -->
-                <div class="collapse" id="collapseCardExample-{{ task.pk }}">
-                  <div class="card-body">
-                    {{ task.description }}
-
-                    <br>
-                    
-                    Category: <strong>{{ task.category }}</strong> 
-                    
-                    <br>
-
-                    Due by: 23 June 2020 8am
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-
         </div>
-        <!-- /.container-fluid -->
-
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
-
+      {% endfor %}
     </div>
-    <!-- End of Content Wrapper -->
-
+    <!-- /.container-fluid -->
   </div>
-  <!-- End of Page Wrapper -->
+  <!-- End of Main Content -->
+  <!-- Footer -->
+  <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+        <span>Copyright &copy; Your Website 2020</span>
+      </div>
+    </div>
+  </footer>
+  <!-- End of Footer -->
+</div>
+<!-- End of Content Wrapper -->
+  
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
-        </div>
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
       </div>
     </div>
   </div>
+</div>
+<!-- Bootstrap core JavaScript-->
+<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-  <!-- Bootstrap core JavaScript-->
-  <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
   
-  <!-- Core plugin JavaScript-->
-  <!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
-  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-  
-  <!-- Custom scripts for all pages-->
-  <!-- <script src="js/sb-admin-2.min.js"></script> -->
-  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-  
-  <!-- Page level plugins -->
-  <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
-  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
-  
-  <!-- Page level custom scripts -->
-  <!-- <script src="js/demo/chart-area-demo.js"></script> -->
-  <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
-  <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
-  <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<!-- <script src="js/sb-admin-2.min.js"></script> -->
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
-  <script type="text/javascript">
-    // send request to change the is_private state on customSwitches toggle
-    function toggleComplete(pk) {
-      let base_url = window.location.origin;
-      let full_url = `${base_url}/complete-toggle/${pk}/`;
-      let toggleCheckbox = $(this);
-      var toggleCheckboxId = toggleCheckbox.attr('data-id');
-        $.ajax({
-            url: full_url,
-            data: {
-                csrfmiddlewaretoken: "{{ csrf_token }}",
-                task_id: toggleCheckboxId // true if checked else false
+<!-- Page level plugins -->
+<!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
+<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
 
-            },
-            type: "POST",
-            dataType : "json",
-            success: function(data) {
-              let innerCheckbox = $("#toggleCheckbox-"+toggleCheckboxId)
-              innerCheckbox.toggleClass("fa-check-square").toggleClass("fa-square")
-            }
-        })
-        // $.ajax().done(), $.ajax().fail(), $ajax().always() are upto you. Add/change accordingly
-        .done(function(data) {
-            console.log(data);
-            // show some message according to the response. 
-            // For eg. A message box showing that the status has been changed
-        })
-        .always(function() {
-            console.log('[Done]');
-        })
-    }
-
-    /////////////
-    /* BINDING */
-    /////////////
-
-      // Complete task toggle
-    $(".icon-bar").on("click", ".complete-checkbox", toggleComplete);
-
+<!-- Page level custom scripts -->
+<!-- <script src="js/demo/chart-area-demo.js"></script> -->
+<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+<!-- <script src="js/demo/chart-pie-demo.js"></script> -->
+<script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+<script type="text/javascript">
+  // send request to change the is_private state on customSwitches toggle
+  function toggleComplete(pk) {
+    let base_url = window.location.origin;
+    let full_url = `${base_url}/complete-toggle/${pk}/`;
+    let toggleCheckbox = $(this);
+    var toggleCheckboxId = toggleCheckbox.attr('data-id');
+      $.ajax({
+          url: full_url,
+          data: {
+              csrfmiddlewaretoken: "{{ csrf_token }}",
+              task_id: toggleCheckboxId // true if checked else false
+          },
+          type: "POST",
+          dataType : "json",
+          success: function(data) {
+            let innerCheckbox = $("#toggleCheckbox-"+toggleCheckboxId)
+            innerCheckbox.toggleClass("fa-check-square").toggleClass("fa-square")
+          }
+      })
+      // $.ajax().done(), $.ajax().fail(), $ajax().always() are upto you. Add/change accordingly
+      .done(function(data) {
+          console.log(data);
+          // show some message according to the response. 
+          // For eg. A message box showing that the status has been changed
+      })
+      .always(function() {
+          console.log('[Done]');
+      })
+  }
+  /////////////
+  /* BINDING */
+  /////////////
+     // Complete task toggle
+   $(".icon-bar").on("click", ".complete-checkbox", toggleComplete);
 </script>
 
 </body>
 
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>  

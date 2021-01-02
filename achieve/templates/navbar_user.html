@@ -1,18 +1,22 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<style>
+  .navbar{
+    background-color: #172A3A;
+  }
+  div{
+    color: rgb(0,0,0);
+  }
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
   <div class="d-flex flex-grow-1">
     <span class="w-100 d-lg-none d-block"></span>
     <a class="navbar-brand d-none d-lg-inline-block" href="{% url 'index' %}">Achieve</a>
   </div>
   <div class="collapse navbar-collapse flex-grow-1 text-right">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link m-2 menu-item nav-active text-white" href="{% url 'categories' %}">Categories</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link m-2 menu-item nav-active text-white" href="{% url 'logout' %}">Logout</a>
-      </li>
       <li class="nav-item">
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

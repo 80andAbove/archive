@@ -9,12 +9,32 @@ from .decorators import unauthenticated_user, allowed_users, admin_only
 
 # Create your views here.
 from .models import Task, Category
-from .forms import TaskForm, CreateUserForm
+from .forms import TaskForm, CreateUserForm, CategoryForm
 
 @unauthenticated_user
 def welcome(request):
-	print("Welcome")
-	return render(request, 'welcome.html')
+	if request.user.is_authenticated:
+		return redirect('index')
+		print("success")
+	else:
+		print("failed")
+		if request.method == 'POST':
+			username = request.POST.get('username')
+			password = request.POST.get('password1')
+
+			user = authenticate(request, username=username, password=password)
+			print("woah")
+			
+			if user is not None:
+				login(request, user)
+				return redirect('index')
+				print("yup")
+			else:
+				messages.info(request, 'Username OR Password is incorrect')
+				print("nope")
+
+	context = {}
+	return render(request, 'welcome.html', context)
 
 def registerPage(request):
 	form = CreateUserForm()
@@ -38,6 +58,10 @@ def registerPage(request):
 
 	context = {'form':form}
 	return render(request, 'register.html', context)
+
+def about(request):
+	context = {}
+	return render(request, 'about.html', context)
 
 @unauthenticated_user
 def loginPage(request):
@@ -162,16 +186,19 @@ def deleteTask(request, pk):
 def categories(request):
 	category = Category.objects.all()
 
-	context = {'category': category}
-	return render(request, 'categories.html', context)
+	print('Majid Jordan')
 
-
-"""
-	categoryForm = CategoryForm(instance=task)
+	# categoryForm = CategoryForm(instance=task)
 
 	if request.method == 'POST':
+		print('Majid Jordan1')
+
 		categoryForm = CategoryForm(request.POST)
+		
 		if categoryForm.is_valid():
 			categoryForm.save()
+		print('Majid Jordan 3')
 		return redirect('/')
-"""
+
+	context = {'category': category}
+	return render(request, 'categories.html', context)

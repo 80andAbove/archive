@@ -8,12 +8,70 @@
     <title>Achieve: A To Do App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/sb-admin-2.css' %}">
 </head>
 <body>
+    {% include 'navbar_user.html' %}
 
-    {% include 'navbar_guest.html' %}
+    <style>
+        body{
+            background-image: url("../static/img/Circuit_Lines.png"); /* Background image */
+        }
 
-    <h1>Welcome</h1>
-    <p>Achieve Your Goals Todays</p>
+        li{
+            list-style-type: none; /* Remove bullets */
+        }
+
+        h1{
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        ul{
+            text-align: center;
+            margin-left: auto;
+        }
+    </style>
+
+   
+
+    <div  class="container">
+        <br>
+        <br>
+        <h1 id="welcome">Welcome to</h1>
+        <h1 id="archive">Archive,</h1> 
+        <br>
+    
+            <!-- Email input -->
+
+        <form method="POST" class="user">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Your username or email" name="username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password1">
+            </div>
+            <input type="submit" class="btn btn-primary btn-user btn-block" placheholder="Login">
+        </form>
+        <br>
+        <ul>
+            <li>
+                <a href="{% url 'register' %}">Sign up</a>
+            </li>
+            <br>
+            <li>
+                <a href="{% url 'about' %}">About us</a>
+            </li>
+            <br>
+            <li>
+                <a href="">Learn more</a>
+            </li>
+            <br>
+        </ul>
+    </div>
+    <!-- The Title -->
+
+    
 </body>

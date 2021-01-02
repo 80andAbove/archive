@@ -35,6 +35,18 @@ class TaskForm(forms.ModelForm):
 		model = Task
 		fields = ['title', 'category', 'description']
 
+class CategoryForm(forms.ModelForm):
+	title = forms.CharField(widget = forms.TextInput(attrs=
+	{
+		'placeholder': 'Add new category...',
+		"class": "form-control",
+	}
+	))	
+
+	class Meta:
+		model = Category
+		fields = ['category']
+
 class CreateUserForm(UserCreationForm):
 	email = forms.EmailField(widget=forms.TextInput, label="Email")
 	password1 = forms.CharField(widget=forms.PasswordInput, label="Password")
@@ -43,4 +55,5 @@ class CreateUserForm(UserCreationForm):
 	class Meta:
 		model = User
 		fields = ['username', 'email', 'password1', 'password2']
+
 
