@@ -204,3 +204,10 @@ def categories(request):
 
 	context = {'category': category}
 	return render(request, 'categories.html', context)
+
+def profile(request):
+	# # If user is a headmaster:
+	# 	user = admin
+
+	# 	else:
+	# 		regular user
