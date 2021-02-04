@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
 # Create your views here.
-from .models import Task, Category
+from .models import Task, Category, CustomUserAdmin, Kin
 from .forms import TaskForm, CreateUserForm, CategoryForm
 
 @unauthenticated_user
@@ -104,16 +104,17 @@ def logoutUser(request):
 # @login_required(login_url='login')
 def index(request):
 	
+	admin = CustomerUserAdmin.objects.all()
+	admin_form = CreateUserForm()
+	
+	if group == "admin":
+    	#print('User is Admin')
+		#admin_user = True
+	else:
+		print('User is not Admin')
+
 	tasks = Task.objects.all()
 	form = TaskForm()
-
-	
-	# if group == "admin":
-    # 	#print('User is Admin')
-	# 	#admin_user = True
-	# else:
-	# 	print('User is not Admin')
-
 
 	if request.method == 'POST':
 		form = TaskForm(request.POST)
@@ -129,6 +130,8 @@ def index(request):
 			print('Form Invalid')
 			print(form.errors)
 		return redirect('/index')
+		return redirect('/index')
+
 
 	context = {
 		'tasks':tasks, 
@@ -144,7 +147,6 @@ def complete_toggle(request, todo_id):
 		task_id = request.POST.get('task_id')
 		task = Task.objects.get(pk=task_id)
 		print('task')
-		print(task)
 		task.complete = True if task.complete == False else False
 		task.save()
 		data = {'status':'success', 'is_complete': task.complete}

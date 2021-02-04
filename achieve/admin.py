@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from .models import Kin, Category, Task
 
 # Register your models here.
 
