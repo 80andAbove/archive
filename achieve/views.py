@@ -9,7 +9,7 @@ from .decorators import unauthenticated_user, allowed_users, admin_only
 
 # Create your views here.
 from .models import Task, Category, CustomUserAdmin, Kin
-from .forms import TaskForm, CreateUserForm, CategoryForm
+from .forms import TaskForm, CreateUserForm, CategoryForm, ProfileForm
 
 @unauthenticated_user
 def welcome(request):
@@ -104,14 +104,14 @@ def logoutUser(request):
 # @login_required(login_url='login')
 def index(request):
 	
-	admin = CustomerUserAdmin.objects.all()
-	admin_form = CreateUserForm()
+	# admin = CustomerUserAdmin.objects.all()
+	# admin_form = CreateUserForm()
 	
-	if group == "admin":
-    	#print('User is Admin')
-		#admin_user = True
-	else:
-		print('User is not Admin')
+	# if group == "admin":
+    # 	#print('User is Admin')
+	# 	#admin_user = True
+	# else:
+	# 	print('User is not Admin')
 
 	tasks = Task.objects.all()
 	form = TaskForm()
@@ -206,8 +206,6 @@ def categories(request):
 	return render(request, 'categories.html', context)
 
 def profile(request):
-	# # If user is a headmaster:
-	# 	user = admin
+	users = Kin.objects.all()
 
-	# 	else:
-	# 		regular user
+	form = ProfileForm()

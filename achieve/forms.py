@@ -56,4 +56,28 @@ class CreateUserForm(UserCreationForm):
 		model = User
 		fields = ['username', 'email', 'password1', 'password2']
 
+class ProfileForm(forms.ModelForm):
+	name = forms.CharField(widget = forms.TextInput(attrs=
+	{
+		'placeholder': 'Input your name...',
+		"class": "form-control",
+	}
+	))
+	
+	age = forms.CharField(widget = forms.TextInput(attrs=
+	{
+		'placeholder': "What's your age?",
+		"class": "form-control",
+	}
+	))
 
+	role = forms.CharField(widget = forms.TextInput(attrs=
+	{
+		'placeholder': "What is your family role?",
+		"class": "form-control",
+	}
+	))
+
+	class Meta:
+		model = User
+		fields = ['name', 'age', 'role']
