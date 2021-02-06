@@ -23,15 +23,3 @@
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
 </head>
-
-{% include 'topbar.html' %}
-
-{% for users in users %}
-
-    {{users.name}}
-    {{users.age}}
-    {{users.family_role}}
-
-{% endfor %}
-
-<a href="{% url 'add_user' %}">Add Family Members</a>

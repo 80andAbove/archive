@@ -208,7 +208,22 @@ def categories(request):
 def profile(request):
 	users = Kin.objects.all()
 
+	context = {'users':users}
+	return render(request, 'profile.html', context)
+
+def add_user(request):
+	users = Kin.objects.all()
 	form = ProfileForm()
 
+	if request.method == 'POST':
+		form = ProfileForm(request.POST)
+		if form.is_valid:
+			print('Form is valid')
+			form.save()
+		else:
+			print(form.errors)
+			print('Could not process')
+			return('profile.html')
+
 	context = {'users':users, 'form':form}
-	return render(request, 'profile.html', context)
+	return render(request, 'add_user.html', context)
