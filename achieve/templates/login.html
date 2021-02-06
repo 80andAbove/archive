@@ -67,14 +67,14 @@
                   </form>
                   {% for message in messages %}
                     <div class="alert alert-success">
-                      <a class="close" href="{% static 'forgot-password.html' %} " data-dismss="alert">x</a>
+                      <a class="close" href="{% url 'forgot_pw' %}" data-dismss="alert">x</a>
 
                       {{ message }}
 
                     </div>
                   {% endfor %}
                   <div class="text-center">
-                    <a class="small" href="{% static 'forgot-password.html' %}">Forgot Password?</a>
+                    <a class="small" href="{% url 'forgot_pw' %}">Forgot Password?</a>
                   </div>
                   <div class="text-center">
                     <a class="small" href="#">About Us</a>

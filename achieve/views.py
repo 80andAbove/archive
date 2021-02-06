@@ -8,13 +8,33 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
 # Create your views here.
-from .models import Task, Category
-from .forms import TaskForm, CreateUserForm
+from .models import Task, Category, CustomUserAdmin, Kin
+from .forms import TaskForm, CreateUserForm, CategoryForm, ProfileForm
 
 @unauthenticated_user
 def welcome(request):
-	print("Welcome")
-	return render(request, 'welcome.html')
+	if request.user.is_authenticated:
+		return redirect('index')
+		print("success")
+	else:
+		print("failed")
+		if request.method == 'POST':
+			username = request.POST.get('username')
+			password = request.POST.get('password1')
+
+			user = authenticate(request, username=username, password=password)
+			print("woah")
+			
+			if user is not None:
+				login(request, user)
+				return redirect('index')
+				print("yup")
+			else:
+				messages.info(request, 'Username OR Password is incorrect')
+				print("nope")
+
+	context = {}
+	return render(request, 'welcome.html', context)
 
 def registerPage(request):
 	form = CreateUserForm()
@@ -38,6 +58,10 @@ def registerPage(request):
 
 	context = {'form':form}
 	return render(request, 'register.html', context)
+
+def about(request):
+	context = {}
+	return render(request, 'about.html', context)
 
 @unauthenticated_user
 def loginPage(request):
@@ -64,6 +88,13 @@ def loginPage(request):
 	context = {}
 	return render(request, 'login.html', context)
 
+def forgotPassword(request):
+	print("Forgot")
+
+	context = {}
+	return render(request, 'forgot-password.html')
+
+
 def logoutUser(request):
 	print("logging out")
 	logout(request)
@@ -73,9 +104,8 @@ def logoutUser(request):
 # @login_required(login_url='login')
 def index(request):
 	
-	tasks = Task.objects.all()
-	form = TaskForm()
-
+	# admin = CustomerUserAdmin.objects.all()
+	# admin_form = CreateUserForm()
 	
 	# if group == "admin":
     # 	#print('User is Admin')
@@ -83,6 +113,8 @@ def index(request):
 	# else:
 	# 	print('User is not Admin')
 
+	tasks = Task.objects.all()
+	form = TaskForm()
 
 	if request.method == 'POST':
 		form = TaskForm(request.POST)
@@ -98,6 +130,8 @@ def index(request):
 			print('Form Invalid')
 			print(form.errors)
 		return redirect('/index')
+		return redirect('/index')
+
 
 	context = {
 		'tasks':tasks, 
@@ -113,7 +147,6 @@ def complete_toggle(request, todo_id):
 		task_id = request.POST.get('task_id')
 		task = Task.objects.get(pk=task_id)
 		print('task')
-		print(task)
 		task.complete = True if task.complete == False else False
 		task.save()
 		data = {'status':'success', 'is_complete': task.complete}
@@ -155,16 +188,27 @@ def deleteTask(request, pk):
 def categories(request):
 	category = Category.objects.all()
 
+	print('Majid Jordan')
+
+	# categoryForm = CategoryForm(instance=task)
+
+	if request.method == 'POST':
+		print('Majid Jordan1')
+
+		categoryForm = CategoryForm(request.POST)
+		
+		if categoryForm.is_valid():
+			categoryForm.save()
+		print('Majid Jordan 3')
+		return redirect('/')
+
 	context = {'category': category}
 	return render(request, 'categories.html', context)
 
+def profile(request):
+	users = Kin.objects.all()
 
-"""
-	categoryForm = CategoryForm(instance=task)
+	form = ProfileForm()
 
-	if request.method == 'POST':
-		categoryForm = CategoryForm(request.POST)
-		if categoryForm.is_valid():
-			categoryForm.save()
-		return redirect('/')
-"""
+	context = {'users':users, 'form':form}
+	return render(request, 'profile.html', context)
