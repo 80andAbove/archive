@@ -26,12 +26,17 @@
 
 {% include 'topbar.html' %}
 
-{% for users in users %}
+<body id="page-top">
 
-    {{users.name}}
-    {{users.age}}
-    {{users.family_role}}
+<h1>Add a New User</h1>
+<form method="POST">
+    <div class="card card-body">
+        {% csrf_token %}
+        {{form.name}}
+        {{form.age}}
+        {{form.family_role}}
+    </div>
+    <input type="submit" name="Submit">
+</form>
 
-{% endfor %}
-
-<a href="{% url 'add_user' %}">Add Family Members</a>
+</body>

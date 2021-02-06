@@ -18,5 +18,6 @@ urlpatterns = [
 	path('delete/<str:pk>/', views.deleteTask, name="delete"),
 	path('categories/', views.categories, name="categories"),
 	path('profile/', views.profile, name="profile"),
+	path('add_users/', views.add_user, name="add_user"),
 	path('logout/', views.logoutUser, name="logout"),
 ]
