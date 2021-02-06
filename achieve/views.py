@@ -209,3 +209,6 @@ def profile(request):
 	users = Kin.objects.all()
 
 	form = ProfileForm()
+
+	context = {'users':users, 'form':form}
+	return render(request, 'profile.html', context)

@@ -1,6 +1,6 @@
 from django import forms
 # COMMENT: BAD PRACTICE TO IMPORT *
-from .models import Task, Category
+from .models import Task, Category, Kin
 from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth.models import User
 
@@ -71,13 +71,6 @@ class ProfileForm(forms.ModelForm):
 	}
 	))
 
-	role = forms.CharField(widget = forms.TextInput(attrs=
-	{
-		'placeholder': "What is your family role?",
-		"class": "form-control",
-	}
-	))
-
 	class Meta:
-		model = User
-		fields = ['name', 'age', 'role']
+		model = Kin
+		fields = ['name', 'age', 'family_role']

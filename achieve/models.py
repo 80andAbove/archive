@@ -39,10 +39,23 @@ class CustomUserAdmin(UserAdmin):
 		return form
 
 class Kin(models.Model):
+	STATUS = (
+		('Father', 'Father'),
+		('Step Father', 'Step Father'),
+		('Mother', 'Mother'),
+		('Step Mother', 'Step Mother'),
+		('Brother', 'Brother'),
+		('Step Brother', 'Step Brother'),
+		('Sister', 'Sister'),
+		('Step Sister', 'Step Sister'),
+	)
+
 	user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 	name = models.CharField(max_length=200, null=True)
+	family_role = models.CharField(max_length=200, null=True, blank=True, choices=STATUS)
 	email = models.CharField(max_length=200, null=True)
 	profile_pic = models.ImageField(default="profile1.png", null=True, blank=True)
+
 	
 	def __str__(self):
 		return self.name

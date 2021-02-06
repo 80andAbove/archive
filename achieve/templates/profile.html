@@ -1,4 +1,13 @@
 {% load static %}
 
-{% for users in users %}
+{% for users in users%}
 
+<form method="POST">
+    <div class="card card-body">
+        {% csrf_token %}
+        {{form}}
+    </div>
+    <input type="submit" name="Submit">
+</form>
+
+{% endfor %}
