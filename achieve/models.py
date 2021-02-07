@@ -50,15 +50,14 @@ class Kin(models.Model):
 		('Step Sister', 'Step Sister'),
 	)
 
-	user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-	name = models.CharField(max_length=200, null=True)
-	family_role = models.CharField(max_length=200, null=True, blank=True, choices=STATUS)
-	email = models.CharField(max_length=200, null=True)
+	user = models.OneToOneField(User, null=False, blank=False, on_delete=models.CASCADE, default=True)
+	name = models.CharField(max_length=200, null=False, default=True)
+	family_role = models.CharField(max_length=200, null=False, blank=False, choices=STATUS, default=True)
+	email = models.CharField(max_length=200, null=False, default=True)
 	profile_pic = models.ImageField(default="profile1.png", null=True, blank=True)
 
-	
 	def __str__(self):
-		return self.name
+		return self.name 
 
 # class Tag(models.Model):
 #  	 name = models.CharField(max_length=200, null=True)
@@ -74,8 +73,8 @@ class Category(models.Model):
 			('School', 'School'),
 			)
 
-	title = models.CharField(max_length=200, null=True)
-	category = models.CharField(max_length=200, choices=CATEGORY, null=True)
+	title = models.CharField(max_length=200, null=False, default=True)
+	category = models.CharField(max_length=200, choices=CATEGORY, null=False, default=True)
 	
 	
 	class Meta:
@@ -84,8 +83,6 @@ class Category(models.Model):
 
 	def __str__(self):
 		return self.title
-
-
 
 class Task(models.Model):
 	title = models.CharField(max_length=200)
@@ -98,4 +95,3 @@ class Task(models.Model):
 
 	def __str__(self):
 		return self.title
-
