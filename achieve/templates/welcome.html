@@ -1,17 +1,9 @@
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Achieve: A To Do App</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% include 'main.html' %}
 
-	<link rel="stylesheet" type="text/css" href="{% static '/css/sb-admin-2.css' %}">
-</head>
 <body>
-    {% include 'navbar_user.html' %}
+    {% include 'navbar_guest.html' %}
 
     <style>
         body{
@@ -32,44 +24,75 @@
             text-align: center;
             margin-left: auto;
         }
+
+        #welcome{
+            font-size: 30px;
+        }
+        #archive{
+            font-size: 90px;
+        }
+        .title{
+            margin-top: 120px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 80px;
+        }
+
+        .form{
+            width: 30%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #submit-btn{
+            width: 120px;
+            margin-top: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .links{
+            margin-top: 100px;
+            margin-right: 50px;
+            margin-bottom: 80px;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 18px;
+        }
     </style>
 
-   
-
-    <div  class="container">
-        <br>
-        <br>
-        <h1 id="welcome">Welcome to</h1>
-        <h1 id="archive">Archive,</h1> 
-        <br>
+    <div class="container">
+        <div class="title">
+            <h1 id="welcome">Welcome to</h1>
+            <h1 id="archive" style="color: #20B688;">Archive,</h1> 
+        </div>
     
             <!-- Email input -->
-
-        <form method="POST" class="user">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Your username or email" name="username">
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password1">
-            </div>
-            <input type="submit" class="btn btn-primary btn-user btn-block" placheholder="Login">
-        </form>
-        <br>
-        <ul>
-            <li>
-                <a href="{% url 'register' %}">Sign up</a>
-            </li>
-            <br>
-            <li>
-                <a href="{% url 'about' %}">About us</a>
-            </li>
-            <br>
-            <li>
-                <a href="">Learn more</a>
-            </li>
-            <br>
-        </ul>
+        <div class="form">
+            <form method="POST" class="user">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Your username or email" name="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password1">
+                </div>
+                <input id="submit-btn" type="submit" class="btn btn-primary btn-user btn-block" placheholder="Login">
+            </form>
+        </div>
+        <div class="links">
+            <ul>
+                <li>
+                    <a href="{% url 'register' %}">Sign up</a>
+                </li>
+                <li>
+                    <a href="{% url 'about' %}">About us</a>
+                </li>
+                <li>
+                    <a href="">Learn more</a>
+                </li>
+            </ul>
+        </div>
     </div>
     <!-- The Title -->
 
