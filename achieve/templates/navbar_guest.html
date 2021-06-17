@@ -4,39 +4,22 @@
   .navbar{
     background-color: #172A3A;
   }
+
   div{
     color: rgb(0,0,0);
   }
 
+  .nav-item{
+    margin-left: 80%;
+  }
 </style>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="d-flex flex-grow-1">
-      <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
-      <a class="navbar-brand d-none d-lg-inline-block" href="{% url 'welcome' %}">Archive</a>
-      <div class=" text-left">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'about' %}">About us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Learn more</a>
-          </li>
-        </ul>
-      </div>
-  </div>
-  <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
-        </li>
-        <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </li>
-      </ul>
-  </div>
+  <li class="nav-item">
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </li>
 </nav>
