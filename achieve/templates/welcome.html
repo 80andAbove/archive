@@ -1,8 +1,8 @@
 {% load static %}
-
 {% include 'main.html' %}
 
-<body>
+
+{% block content %}
     {% include 'navbar_guest.html' %}
 
     <style>
@@ -97,4 +97,4 @@
     <!-- The Title -->
 
     
-</body>
+{% endblock content %}

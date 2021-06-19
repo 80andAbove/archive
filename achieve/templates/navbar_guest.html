@@ -1,5 +1,9 @@
 {% load static %}
 
+<head>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+
 <style>
   .navbar{
     background-color: #172A3A;
@@ -12,14 +16,23 @@
   .nav-item{
     margin-left: 80%;
   }
+
+  button:hover input{
+    opacity: 1;
+    color: white;
+  }
+
+  i{
+    color: white;
+  }
 </style>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark">
   <li class="nav-item">
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="opacity: 0;">
+      <button class="btn my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
     </form>
   </li>
 </nav>

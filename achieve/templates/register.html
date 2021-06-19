@@ -24,6 +24,27 @@
 
 <body class="bg-gradient-primary">
 
+  <style>
+    
+    .card{
+      margin-top: 1200px;
+    }
+
+    #welcome{
+      font-size: 30px;
+    }
+
+    #archive{
+      font-size: 70px;
+      color: #20B688;
+    }
+
+    #title{
+      margin-bottom: 50px;
+    }
+    
+  </style>
+
   <div class="container">
 
     <div class="card o-hidden border-0 shadow-lg my-5">
@@ -32,9 +53,9 @@
         <div>
           <div class="col-lg-7">
             <div class="p-5">
-              <div class="text-center">
-                <h3 class="h4 text-gray-900 mb-4">Welcome to</h1>
-                <h1 class="h4 text-blue-900 mb-4">Archive,</h1>
+              <div id="title" class="text-center">
+                <h3 id="welcome" class="h4 text-gray-900 mb-4">Welcome to</h1>
+                <h1 id="archive" class="h4 text-blue-900 mb-4">Archive,</h1>
               </div>
               <form method="POST" class="user">
                 {% csrf_token %}
@@ -71,10 +92,10 @@
                 <p>{{message}}</p>
               </div>  
               {% endfor %}
-              <div class="text-center">
+              <div id="links" class="text-center">
                 <a class="small" href="(% url 'forgot_pw' %}">Forgot Password?</a>
               </div>
-              <div class="text-center">
+              <div id="links" class="text-center">
                 <a class="small" href="{% url 'login' %}">Already have an account? Login!</a>
               </div>
             </div>
